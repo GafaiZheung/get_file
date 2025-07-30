@@ -1,18 +1,12 @@
 
+
 import React, { useRef, useState } from 'react';
 import './App.css';
+import { UPLOAD_URL } from './config';
 
 const acceptTypes = '.xlsx,.xls,.csv';
 
-function getConfig() {
-  // 只在开发环境下动态读取config.json
-  if (typeof window !== 'undefined') {
-    return fetch('/config.json')
-      .then(res => res.json())
-      .catch(() => null);
-  }
-  return Promise.resolve(null);
-}
+
 
 function App() {
   const [file, setFile] = useState(null);
@@ -21,15 +15,10 @@ function App() {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [uploadUrl, setUploadUrl] = useState(import.meta.env.VITE_UPLOAD_URL || 'http://localhost:8000/api/upload/');
+  const [uploadUrl] = useState(UPLOAD_URL);
   const inputRef = useRef(null);
 
-  // 首次加载时读取config.json
-  React.useEffect(() => {
-    getConfig().then(cfg => {
-      if (cfg && cfg.upload_url) setUploadUrl(cfg.upload_url);
-    });
-  }, []);
+
 
   const handleChange = (e) => {
     const selected = e.target.files[0];
