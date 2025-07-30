@@ -1,0 +1,6 @@
+{
+  "backend_port": 8000,
+  "frontend_port": 5173,
+  "upload_url": "http://localhost:8000/api/upload/",
+  "media_dir": "media/uploads/"
+}
